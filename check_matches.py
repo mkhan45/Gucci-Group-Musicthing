@@ -14,6 +14,6 @@ def check_matches(audio_data):
 
     Dependencies
     ------------
-    ~~~
-
+    Digital samples to peaks
+    Peaks to fingerprints
     """
