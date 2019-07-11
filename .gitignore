@@ -74,6 +74,7 @@ target/
 
 #PyCharm
 .idea
+.idea/
 
 # pyenv
 .python-version
