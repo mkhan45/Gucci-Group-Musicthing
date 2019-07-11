@@ -81,7 +81,6 @@ def local_peaks(log_spectrogram, amp_min, p_nn):
     neighbors of increasing frequencies at the same times, and then move to
     the next time bin.
     """
-<<<<<<< HEAD:digital_samples_to_peaks
     struct = generate_binary_structure(2, 1)
     neighborhood = iterate_structure(struct, p_nn)
     rows, cols = np.where(neighborhood)
@@ -103,6 +102,3 @@ def local_peaks(log_spectrogram, amp_min, p_nn):
     # locations much simpler.
 
     return detected_peaks
-=======
-    pass
->>>>>>> c9622433091919bcfbe02d2e934d88386ec91ef3:digital_samples_to_peaks.py
