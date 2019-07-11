@@ -17,7 +17,12 @@ def check_matches(audio_data, filename):
 
     Dependencies
     ------------
-    Digital samples to peaks
-    Peaks to fingerprints
+    sample_to_spectrogram()
+    spectrogram_graph()
+    spectrogram_to_peaks()
+    <peaks to fingerprints> (to be named)
     """
+
+
+
     pass
