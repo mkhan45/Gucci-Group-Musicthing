@@ -50,6 +50,11 @@ def read_from_mp3_array(path, database_name):
     -------
     List of dictionaries
         Normal python list of fingerprints
+
+    Dependencies
+    ------------
+    Song to fingerprint
+    append_database
     """
 
 def append_database(database_name, fingerprint):
@@ -64,4 +69,8 @@ def append_database(database_name, fingerprint):
 
     fingerprint : dictionary
         fingerprint of song
+
+    Dependencies
+    ------------
+    Song to fingerprint
     """
