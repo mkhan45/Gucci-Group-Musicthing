@@ -16,3 +16,10 @@ def spectrogram_graph(spectrogramArray):
     """
     pass
 
+def spectogram_to_peaks(spectrogramArray):
+    """
+    Takes in the spectrogram array of values and finds the peaks
+    :param spectrogramArray: [numpy array] The spectrogram array
+    :return: [numpy array] The peaks
+    """
+    pass
