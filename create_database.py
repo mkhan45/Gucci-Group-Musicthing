@@ -14,6 +14,8 @@ database = read_from_mp3_folder(path)
 
 filename = input("What should the file be called?\n")
 
+print(database)
+
 with open(filename, 'wb') as f:
     # Pickle the 'data' dictionary using the highest protocol available.
     pickle.dump(database, f, pickle.HIGHEST_PROTOCOL)
