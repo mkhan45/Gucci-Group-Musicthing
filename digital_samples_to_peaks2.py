@@ -1,5 +1,12 @@
 from numba import njit
+
+import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
+
+import numpy as np
+
+from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
+from scipy.ndimage.morphology import iterate_structure
 
 def sample_to_spectrogram(sample):
     """Takes in digital samples and produces the spectrogram array.
@@ -19,7 +26,7 @@ def sample_to_spectrogram(sample):
 def spectrogram_graph(sample):
     """
     Graphs the spectrogramArray into a spectrogram
-    :param spectrogramArray: [numpy array] The spectrogram array
+    :param spectrogramArray: [numpy array] The digital samples of audio
     :return: None
     """
     fig, ax = plt.subplots()
@@ -118,3 +125,16 @@ def local_peaks(log_spectrogram, amp_min, p_nn):
     # locations much simpler.
 
     return detected_peaks
+
+def sample_to_peaks(samples):
+    """
+    Takes in the samples and produces the peaks.
+    :param samples: [numpy array] The digital samples
+    :return: List[Tuple[int, int]]
+        Time and frequency index-values of the local peaks in spectrogram.
+        Sorted by ascending frequency and then time.
+    """
+    log_spectrogram = np.log(sample_to_spectrogram(samples))
+    amp_min = log_spectrogram[round(0.77 * len(log_spectrogram))]
+    local_peaks(log_spectrogram, amp_min,15)
+
