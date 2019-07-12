@@ -136,5 +136,7 @@ def sample_to_peaks(samples):
     """
     log_spectrogram = np.log(sample_to_spectrogram(samples))
     amp_min = log_spectrogram[round(0.77 * len(log_spectrogram))]
-    local_peaks(log_spectrogram, amp_min,15)
+    return local_peaks(log_spectrogram, amp_min,15)
+
+
 
