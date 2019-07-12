@@ -47,11 +47,12 @@ def check_matches(audio_data, database):
         if match_cnt[match] < req:
             del match_cnt[match]
 
+    print(match_cnt)
+
     if len(match_cnt) == 0:
         return no_match
             
     #RETURN THE SONG ID WITH THE MOST MATCHES
-    print(match_cnt)
     return match_cnt.most_common(1)
 
 
