@@ -28,8 +28,7 @@ def get_mp3_data(path, secs=None):
     """
     
     song_path = Path(path)
-
-    data, sr = librosa.load(song_path, sr=44100, mono=True, dtype=float, duration=secs)
+    data, sr = librosa.load(str(song_path.resolve()), sr=44100, mono=True, dtype=float, duration=secs)
     return data * 2**15
 
 def get_mic_data(record_time): #also kind of unnecessary??
@@ -73,7 +72,7 @@ def read_from_mp3_folder(path):
 
     folder = Path(path)
     for file in folder.iterdir():
-        if not file.is_dir():
+        if not file.is_dir() and file.suffix == ".mp3":
             name = file.stem
             # Pseudocode
             samples = get_mp3_data(file)
