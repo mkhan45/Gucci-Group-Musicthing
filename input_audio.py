@@ -6,7 +6,7 @@ from microphone import record_audio
 from digital_samples_to_peaks2 import sample_to_peaks
 import pickle
 
-class database:
+class Database:
     def __init__(self):
         self.dictionary = {}
         self.id_to_name = {}

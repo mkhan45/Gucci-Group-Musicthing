@@ -45,7 +45,7 @@ def spectrogram_graph(sample):
     ax.set_title("Spectrogram")
     ax.set_ylim(0, 6000);
 
-@njit()
+#@njit()
 def _peaks(spec, rows, cols, amp_min):
     peaks = []
     # We want to iterate over the array in column-major
@@ -143,6 +143,3 @@ def sample_to_peaks(samples):
     log_spectrogram = np.log(S).flatten()
     amp_min = log_spectrogram[round(0.77 * len(log_spectrogram))]
     return local_peaks(log_spectrogram, amp_min,15)
-
-
-
