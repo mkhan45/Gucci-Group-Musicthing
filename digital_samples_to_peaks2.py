@@ -18,6 +18,7 @@ def sample_to_spectrogram(sample):
         spectrogramArray: [numpy array] an array of the spectrogram values
     This function does not plot the spectrogram.
     """
+    sample[sample<10**(-10)] = 10**(-10)
     sampling_rate = 44100  # sampling rate in Hz
 
     S, freqs, times = mlab.specgram(sample, NFFT=4096, Fs=sampling_rate,
@@ -31,6 +32,9 @@ def spectrogram_graph(sample):
     :param spectrogramArray: [numpy array] The digital samples of audio
     :return: None
     """
+    sample[sample < 10**(-10)] = 10**(-10)
+    print(sample[sample < 10**(-10)])
+    print(sample)
     sampling_rate = 44100  # sampling rate in Hz
 
     fig, ax = plt.subplots()
@@ -139,7 +143,9 @@ def sample_to_peaks(samples):
         Sorted by ascending frequency and then time.
     """
     S = sample_to_spectrogram(samples)
-    S[S<10^(-20)] = 10^(-20)
-    log_spectrogram = np.log(S).flatten()
-    amp_min = log_spectrogram[round(0.77 * len(log_spectrogram))]
+    S[S < 10**(-20)] = 10**(-20)
+    log_spectrogram = np.log(S)
+    flatS = log_spectrogram.flatten()
+    amp_min = flatS[round(0.77 * len(flatS))]
     return local_peaks(log_spectrogram, amp_min,15)
+
