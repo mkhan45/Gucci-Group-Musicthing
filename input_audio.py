@@ -26,7 +26,7 @@ def get_mp3_data(path, secs=None):
     (Numpy array, int)
         A tuple containing the numpy array for the file and the int id
     """
-    
+
     song_path = Path(path)
     data, sr = librosa.load(str(song_path.resolve()), sr=44100, mono=True, dtype=float, duration=secs)
     return data * 2**15
@@ -99,7 +99,9 @@ def append_database(database, fingerprint, song_name):
     ------------
     Song to fingerprint
     """
-    database.dictionary.update(fingerprint)
+    if fingerprint[0] not in database.dictionary:
+        database.dictionary[fingerprint[0]] = []
+    database.dictionary[fingerprint[0]].append(fingerprint[1])
     database.id_to_name[len(database.id_to_name)] = song_name
 
 def read_database_file(filename): #kind of unnecessary?
@@ -115,7 +117,7 @@ def read_database_file(filename): #kind of unnecessary?
     -------
     database : dictionary
     """
-    with (open(filename, 'rb')) as file:
+    with open(filename, 'rb') as file:
         db = pickle.load(file)
         print(type(db))
         print(db)
