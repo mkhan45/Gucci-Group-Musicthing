@@ -37,8 +37,12 @@ def check_matches(audio_data, database):
 
     match_cnt = Counter()
 
+    print(database)
+
     for k, v in kvpairs.items():
+        print(k)
         if k in database:
+            print("GOT INTO IF STATEMENT")
             print(database[k])
             match_cnt.update((id, song_t - v[1]) for (id, song_t) in database[k])
 
