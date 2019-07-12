@@ -27,8 +27,6 @@ def check_matches(audio_data, database):
     <peaks to keys> (to be named)
     """
 
-    #data_to_time = dict(zip(audio_data, times)); probably don't need this,
-    # but map data to time after peaks and keys are calculated
     req = 100 #Determine through experimentation
     no_match = -1 #maybe -1?
 
@@ -54,22 +52,21 @@ def check_matches(audio_data, database):
     #RETURN THE SONG ID WITH THE MOST MATCHES
     return match_cnt.most_common(1)
 
+
     #OLD CODE--WILL PROBABLY NOT NEED (IGNORE)
-
-        '''
-        sample_time = np.array(v)
-        song_time = np.array(database[k])
-        sample_time[:,1] = song_time[:,1] - sample_time[:,1] #maybe will have to reverse, but this works with array broadcasting
-        match_cnt.update(sample_time)
-        '''
-
-        '''
-        for pair in v:
-            if pair[0] not in match_cnt:
-                match_cnt[pair[0]] = 1
-            else:
-                match_cnt[pair[0]] += 1
-        '''
+    '''
+    sample_time = np.array(v)
+    song_time = np.array(database[k])
+    sample_time[:,1] = song_time[:,1] - sample_time[:,1] #maybe will have to reverse, but this works with array broadcasting
+    match_cnt.update(sample_time)
+    '''
+    '''
+    for pair in v:
+        if pair[0] not in match_cnt:
+            match_cnt[pair[0]] = 1
+        else:
+            match_cnt[pair[0]] += 1
+    '''
 
     '''
     times = list() #Times at which peaks were found in given song
@@ -91,5 +88,4 @@ def check_matches(audio_data, database):
         diff = i[1] - i[0][:][1] #diff is a np.array object with all the times differences for this one peak
         #maybe make second term cleaner with numpy array later
         time_diffs.append(diff)
-    
     '''
