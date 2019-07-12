@@ -49,7 +49,7 @@ def spectrogram_graph(sample):
     ax.set_title("Spectrogram")
     ax.set_ylim(0, 6000);
 
-#@njit()
+@njit()
 def _peaks(spec, rows, cols, amp_min):
     peaks = []
     # We want to iterate over the array in column-major
