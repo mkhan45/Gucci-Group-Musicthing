@@ -52,7 +52,7 @@ def check_matches(audio_data, database):
         return no_match
             
     #RETURN THE SONG ID WITH THE MOST MATCHES
-    return match_cnt.most_common()
+    return match_cnt.most_common(1)
 
     #OLD CODE--WILL PROBABLY NOT NEED (IGNORE)
 
