@@ -1,7 +1,6 @@
 import numpy as np
 import librosa
-import matplotlib.pyplot as plt
-from IPython.display import Audio
+import numpy as np
 from pathlib import Path
 from microphone import record_audio
 import pickle
@@ -39,8 +38,8 @@ def get_mp3_data(path):
     
     song_path = Path(path)
 
+    data, sr = librosa.load(song_path, sr=44100, mono=True, dtype=float)
     id = generate_id(song_path)
-    data, fr = librosa.load(song_path, sr=44100, mono=True)
     return (data, id)
 
 def get_mic_data(record_time): #also kind of unnecessary??
