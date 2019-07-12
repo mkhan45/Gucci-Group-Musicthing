@@ -14,7 +14,7 @@ def check_matches(audio_data, database):
 
     database : dictionary
         An dictionary containing fingerprint (peak to list of songs) mappings for all songs
-    
+
     Returns
     -------
     int()
@@ -30,21 +30,22 @@ def check_matches(audio_data, database):
     req = 20 #Determine through experimentation
     no_match = -1 #maybe -1?
 
-    kvpairs = dict(fp.get_fingerprint(spk.sample_to_peaks(spk.sample_to_spectrogram(audio_data)), 15))
+    kvpairs = fp.get_fingerprint(spk.sample_to_peaks(spk.sample_to_spectrogram(audio_data)), 15)
     #audio_data, times --> spectrogram --> array of peaks: peak = (t, f) --> list of peaks in the song
-    
+
     #COUNT NUMBER OF MATCHED PEAKS FOR EACH SONG IN THE DATABASE, RECORD OFFSETS
 
     match_cnt = Counter()
 
-    print(database)
+    #print(database)
+    print(kvpairs)
 
     for k, v in kvpairs.items():
-        print(k)
+        #print(k)
         if k in database:
             print("GOT INTO IF STATEMENT")
             print(database[k])
-            match_cnt.update((id, song_t - v[1]) for (id, song_t) in database[k])
+            match_cnt.update((value[0], value[1] - v[0][1]) for value in database[k])
 
     #ELIMINATE SONGS WITH INSUFFICIENT MATCHES
     for match in match_cnt:
@@ -55,9 +56,9 @@ def check_matches(audio_data, database):
 
     if len(match_cnt) == 0:
         return no_match
-            
+
     #RETURN THE SONG ID WITH THE MOST MATCHES
-    return match_cnt.most_common(1)
+    return match_cnt.most_common(1)[0][0]
 
 
     #OLD CODE--WILL PROBABLY NOT NEED (IGNORE)
@@ -79,7 +80,7 @@ def check_matches(audio_data, database):
     times = list() #Times at which peaks were found in given song
     posmatches = list() #Values (lists of (song1, time), (song2, time)...) for possible matches
     '''
-    
+
     '''
     for p, t in kvpairs:
         if p in database:

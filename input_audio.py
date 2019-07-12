@@ -102,7 +102,7 @@ def append_database(database, fingerprint, song_name):
     for key in fingerprint:
         if key not in database.dictionary:
             database.dictionary[key] = []
-        database.dictionary[key].append(fingerprint[key])
+        database.dictionary[key].extend(fingerprint[key])
     database.id_to_name[len(database.id_to_name)] = song_name
 
 def read_database_file(filename): #kind of unnecessary?
