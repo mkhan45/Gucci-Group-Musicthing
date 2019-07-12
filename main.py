@@ -20,6 +20,6 @@ mic_data = get_mic_data(seconds)
 
 print(mic_data)
 
-matches = check_matches(mic_data, database)
+matches = check_matches(mic_data, database.dictionary)
 
-print(matches)
+print(database.id_to_name(matches)
