@@ -4,6 +4,7 @@ import numpy as np
 from pathlib import Path
 from microphone import record_audio
 from digital_samples_to_peaks2 import sample_to_peaks
+from fingerprint import get_fingerprint
 import pickle
 
 class Database:
@@ -48,7 +49,7 @@ def get_mic_data(record_time): #also kind of unnecessary??
     return audio_data
 
 
-def read_from_mp3_folder(path, duration):
+def read_from_mp3_folder(path):
     """
     Reads folder of mp3s into database
 
@@ -99,7 +100,7 @@ def append_database(database, fingerprint, song_name):
     Song to fingerprint
     """
     database.dictionary.update(fingerprint)
-    database[len(database.id_to_name)] = song_name
+    database.dictionary[len(database.id_to_name)] = song_name
 
 def read_database_file(filename): #kind of unnecessary?
     """

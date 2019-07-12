@@ -18,7 +18,7 @@ def sample_to_spectrogram(sample):
         spectrogramArray: [numpy array] an array of the spectrogram values
     This function does not plot the spectrogram.
     """
-    sample[sample<10**(-10)] = 10**(-10)
+    #sample[sample<10**(-10)] = 10**(-10)
     sampling_rate = 44100  # sampling rate in Hz
 
     S, freqs, times = mlab.specgram(sample, NFFT=4096, Fs=sampling_rate,
@@ -32,9 +32,9 @@ def spectrogram_graph(sample):
     :param spectrogramArray: [numpy array] The digital samples of audio
     :return: None
     """
-    sample[sample < 10**(-10)] = 10**(-10)
-    print(sample[sample < 10**(-10)])
-    print(sample)
+    #sample[sample < 10**(-10)] = 10**(-10)
+    #print(sample[sample < 10**(-10)])
+    #print(sample)
     sampling_rate = 44100  # sampling rate in Hz
 
     fig, ax = plt.subplots()
@@ -49,7 +49,7 @@ def spectrogram_graph(sample):
     ax.set_title("Spectrogram")
     ax.set_ylim(0, 6000);
 
-#@njit()
+@njit()
 def _peaks(spec, rows, cols, amp_min):
     peaks = []
     # We want to iterate over the array in column-major
