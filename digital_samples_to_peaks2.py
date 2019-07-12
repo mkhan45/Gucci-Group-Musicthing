@@ -8,6 +8,8 @@ import numpy as np
 from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
 from scipy.ndimage.morphology import iterate_structure
 
+sampling_rate = 44100  # sampling rate in Hz
+
 def sample_to_spectrogram(sample):
     """Takes in digital samples and produces the spectrogram array.
     Parameters:
@@ -16,7 +18,6 @@ def sample_to_spectrogram(sample):
         spectrogramArray: [numpy array] an array of the spectrogram values
     This function does not plot the spectrogram.
     """
-    sampling_rate = 44100  # sampling rate in Hz
 
     S, freqs, times = mlab.specgram(sample, NFFT=4096, Fs=sampling_rate,
                                     window=mlab.window_hanning,
