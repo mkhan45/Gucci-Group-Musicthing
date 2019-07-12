@@ -8,6 +8,8 @@ import numpy as np
 from scipy.ndimage.morphology import generate_binary_structure, binary_erosion
 from scipy.ndimage.morphology import iterate_structure
 
+sampling_rate = 44100  # sampling rate in Hz
+
 def sample_to_spectrogram(sample):
     """Takes in digital samples and produces the spectrogram array.
     Parameters:
@@ -29,6 +31,8 @@ def spectrogram_graph(sample):
     :param spectrogramArray: [numpy array] The digital samples of audio
     :return: None
     """
+    sampling_rate = 44100  # sampling rate in Hz
+
     fig, ax = plt.subplots()
 
     S, freqs, times, im = ax.specgram(sample, NFFT=4096, Fs=sampling_rate,
