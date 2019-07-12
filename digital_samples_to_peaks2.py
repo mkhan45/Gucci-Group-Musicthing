@@ -138,7 +138,9 @@ def sample_to_peaks(samples):
         Time and frequency index-values of the local peaks in spectrogram.
         Sorted by ascending frequency and then time.
     """
-    log_spectrogram = np.log(sample_to_spectrogram(samples))
+    S = sample_to_spectrogram(samples)
+    S[S<10^(-20)] = 10^(-20)
+    log_spectrogram = np.log(S).flatten()
     amp_min = log_spectrogram[round(0.77 * len(log_spectrogram))]
     return local_peaks(log_spectrogram, amp_min,15)
 
