@@ -3,6 +3,7 @@ import librosa
 import matplotlib.pyplot as plt
 from IPython.display import Audio
 from pathlib import Path
+from microphone import record_audio
 import pickle
 
 def generate_id(path):
@@ -42,7 +43,24 @@ def get_mp3_data(path):
     data, fr = librosa.load(song_path, sr=44100, mono=True)
     return (data, id)
 
-def read_from_mp3_folder(path, database_name):
+def get_mic_data(record_time): #also kind of unnecessary??
+    """
+    Parameters
+    ----------
+    record_time : int
+        number of seconds to record
+
+    Returns
+    -------
+    np.ndarray(seconds * sample_rate)
+        The audio data
+    """
+    frames, sample_rate = record_audio(record_time)
+    audio_data = np.hstack([np.frombuffer(i, np.int16) for i in frames])
+    return audio_data
+
+
+def read_from_mp3_folder(path):
     """
     Reads folder of mp3s into database
 
@@ -66,9 +84,11 @@ def read_from_mp3_folder(path, database_name):
     for file in folder.iterdir():
         if not file.is_dir():
             # Pseudocode
+            # samples = get_mp3_data()
             # peaks = samples to peaks
             # fingerprint = fingerprint()
             # append_database(database_name, fingerprint)
+            pass
 
 def append_database(database, fingerprint):
     """
