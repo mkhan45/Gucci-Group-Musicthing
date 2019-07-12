@@ -31,13 +31,14 @@ def check_matches(audio_data, database):
     no_match = -1 #maybe -1?
 
     kvpairs = dict(fp.get_fingerprint(spk.sample_to_peaks(spk.sample_to_spectrogram(audio_data)), 15))
+    print(kvpairs)
     #audio_data, times --> spectrogram --> array of peaks: peak = (t, f) --> list of peaks in the song
     
     #COUNT NUMBER OF MATCHED PEAKS FOR EACH SONG IN THE DATABASE, RECORD OFFSETS
 
     match_cnt = Counter()
 
-    for k, v in kvpairs:
+    for k, v in kvpairs.items():
         if k in database:
             match_cnt.update((id, song_t - v[1]) for (id, song_t) in database[k])
 
