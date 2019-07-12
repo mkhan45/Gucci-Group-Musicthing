@@ -1,8 +1,10 @@
 def peaks_to_fingerprint(peaks, fanout, song_id=None):
-    """Converts the peaks to keys (and values) that represent the song.
+    """Converts the peaks to keys or a dictionary that represent the song.
 
-    Specifying a song_id will cause this function to output a dictionary.
-    Otherwise, the function will output a list of keys.
+    This function will output a list of keys unless `song_id` is
+    specified, in which case it will output a dictionary.
+    The keys represent prominent features of the song, and are
+    represented by Tuple[<freq_i>, <freq_n>, <dt>].
 
     Parameters
     ----------
@@ -10,24 +12,20 @@ def peaks_to_fingerprint(peaks, fanout, song_id=None):
         A list of peaks, where each peak is given by Tuple[<freq>, <time>].
     fanout : int
         An int representing how many other peaks to relate, i.e. how many keys
-        to generate per peak.
+        to generate per peak (roughly).
     song_id : int
-        The unique int that identifies the corresponding song to store in song_dict
+        The unique int that identifies the song to associate with these keys.
 
     Returns
     -------
     keys: List[Tuple[int, int, int]]
         A list of keys, where each key is given by
         List[Tuple[<freq_i>, <freq_n>, <dt>]]
+    ##### OR #####
     song_dict : dict
-        The dictionary representing the song, where keys are given by
-        Tuple[<freq_i>, <freq_n>, <dt>], and values are given by
-        Tuple[`song_id`, <time>]
-
-    Notes
-    -----
-    The keys are not returned in chronological order, and are formatted as follows:
-    .. math::  (f_i, f_n, t_n - t_i), \text{where} \, \{n \, | \, n \in \mathbb{N}, \, n \in [0, \mathtt{fanout}) \}
+        The dictionary representing the song, where
+        keys are given by Tuple[<freq_i>, <freq_n>, <dt>] and
+        values are given by Tuple[`song_id`, <time>]
     """
 
     if song_id is None:
@@ -45,7 +43,7 @@ def peaks_to_fingerprint(peaks, fanout, song_id=None):
 
 
 def __get_key(peak1, peak2):
-    """Generates a key from two peaks.
+    """Generates a "key" from two peaks.
 
     Parameters
     ----------
@@ -55,7 +53,7 @@ def __get_key(peak1, peak2):
     Returns
     -------
     key : Tuple[int, int, int]
-        The key to be used in song_dict.
+        `key` is given by Tuple[<freq_i>, <freq_n>, <dt>]
     """
 
     return (peak1[0], peak2[0], peak2[1] - peak1[1])
