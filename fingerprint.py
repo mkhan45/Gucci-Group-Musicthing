@@ -18,12 +18,12 @@ def get_fingerprint(peaks, fanout, song_id=None):
     song_dict : Generator[`key`, `value`]
         A generator for the dictionary representing the song, where
         `key` is given by Tuple[<freq_i>, <freq_n>, <dt>] and
-        `value` is given by Tuple[<time>, `song_id`]
+        `value` is given by Tuple[`song_id`, <time>]
     """
 
     for i in range(1, fanout+1):
         for j in range(len(peaks) - i):
-            yield (__get_key(peaks[j], peaks[j+i]), ((peaks[j][0]), song_id))
+            yield (__get_key(peaks[j], peaks[j+i]), (song_id, (peaks[j][0])))
 
 
 def __get_key(peak1, peak2):

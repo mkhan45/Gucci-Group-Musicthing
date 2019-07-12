@@ -59,7 +59,7 @@ def read_from_mp3_folder(path):
 
     Returns
     -------
-    Dictionary
+    Database
         database of songs
 
     Dependencies
@@ -79,7 +79,8 @@ def read_from_mp3_folder(path):
             peaks = sample_to_peaks(samples)
             fingerprint = get_fingerprint(peaks, 15, len(database.id_to_name))
             append_database(database, fingerprint, name)
-            pass
+
+    return database
 
 def append_database(database, fingerprint, song_name):
     """
@@ -99,7 +100,7 @@ def append_database(database, fingerprint, song_name):
     Song to fingerprint
     """
     database.dictionary.update(fingerprint)
-    database.dictionary[len(database.id_to_name)] = song_name
+    database.id_to_name[len(database.id_to_name)] = song_name
 
 def read_database_file(filename): #kind of unnecessary?
     """
@@ -114,4 +115,8 @@ def read_database_file(filename): #kind of unnecessary?
     -------
     database : dictionary
     """
-    return pickle.load(open(filename, 'rb'))
+    with (open(filename, 'rb')) as file:
+        db = pickle.load(file)
+        print(type(db))
+        print(db)
+        return db
