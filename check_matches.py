@@ -1,7 +1,7 @@
 import numpy as np
 import digital_samples_to_peaks2 as spk
 
-def check_matches(audio_data, times, database):
+def check_matches(audio_data, database, sampling_rate=44100):
     """
     Checks if audio data from a song matches a song in the database, and if so, which song it is
 
@@ -10,11 +10,11 @@ def check_matches(audio_data, times, database):
     audio_data : np.array([])
         A 1D array of audio samples from recorded audio or audio file.
 
-    times: np.array([])
-        A 1D array of the same length as audio_data with the corresponding time points.
-
     database : dictionary
         An dictionary containing fingerprint (peak to list of songs) mappings for all songs
+
+    sampling_rate [optional] : int()
+        The sampling rate at which the audio_data was recorded
     
     Returns
     -------
@@ -33,7 +33,7 @@ def check_matches(audio_data, times, database):
     req = 10 #Determine through experimentation
     no_match = "Song not recognized."
 
-    kvpairs = peaks_to_pairs(spk.local_peaks(spk.sample_to_spectrogram(audio_data, times)))
+    kvpairs = peaks_to_pairs(spk.local_peaks(spk.sample_to_spectrogram(audio_data, sampling_rate))) #might not need smapling rate
     #audio_data, times --> spectrogram --> array of peaks: peak = (t, f) --> list of peaks in the song
     times = list() #Times at which peaks were found in given song
     posmatches = list() #Values (lists of (song1, time), (song2, time)...) for possible matches
