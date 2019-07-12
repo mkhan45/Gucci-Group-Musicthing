@@ -102,7 +102,7 @@ def append_database(database, fingerprint, song_name):
     Song to fingerprint
     """
     database.dictionary.update(fingerprint)
-    database.dictionary[len(database.id_to_name)] = song_name
+    database.id_to_name[len(database.id_to_name)] = song_name
 
 def read_database_file(filename): #kind of unnecessary?
     """
