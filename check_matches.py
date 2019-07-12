@@ -38,15 +38,22 @@ def check_matches(audio_data, database):
     match_cnt = Counter()
 
     for k, v in kvpairs.items():
-        print(v)
         if k in database:
             print(database[k])
-            match_cnt.update((value[0], value[1] - v[1]) for value in database[k])
+            for value in database[k]:
+                print("value: {}".format(value))
+                print(v)
+                match_cnt.update((value[0], value[1] - v[0][1]))
 
     #ELIMINATE SONGS WITH INSUFFICIENT MATCHES
+    bad_matches = []
+
     for match in match_cnt:
         if match_cnt[match] < req:
-            del match_cnt[match]
+            bad_matches.append(match)
+
+    for bad_match in bad_matches:
+        del match_cnt[match]
 
     print(match_cnt)
 
