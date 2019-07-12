@@ -1,4 +1,4 @@
-def peaks_to_fingerprint(peaks, fanout, song_id=None):
+def get_fingerprint(peaks, fanout, song_id=None):
     """Converts the peaks to keys or a dictionary that represent the song.
 
     This function will output a list of keys unless `song_id` is
@@ -9,7 +9,7 @@ def peaks_to_fingerprint(peaks, fanout, song_id=None):
     Parameters
     ----------
     peaks : List[Tuple[int, int]]
-        A list of peaks, where each peak is given by Tuple[<freq>, <time>].
+        A list of peaks, where each peak is given by Tuple[<time>, <freq>].
     fanout : int
         An int representing how many other peaks to relate, i.e. how many keys
         to generate per peak (roughly).
@@ -48,7 +48,9 @@ def __get_key(peak1, peak2):
     Parameters
     ----------
     peak1, peak2 : List[Tuple[int, int]]
-        The two peaks to generate a key from.
+        The two peaks to generate a key from, where each peak is
+        given by Tuple[<time>, <freq>]. Assumes `peak2` occurs concurrently or
+        after `peak1`.
 
     Returns
     -------
@@ -56,4 +58,4 @@ def __get_key(peak1, peak2):
         `key` is given by Tuple[<freq_i>, <freq_n>, <dt>]
     """
 
-    return (peak1[0], peak2[0], peak2[1] - peak1[1])
+    return (peak1[1], peak2[1], peak2[0] - peak1[0])

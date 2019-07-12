@@ -95,7 +95,7 @@ def local_peaks(log_spectrogram, amp_min, p_nn):
     -------
     List[Tuple[int, int]]
         Time and frequency index-values of the local peaks in spectrogram.
-        Sorted by ascending frequency and then time.
+        Sorted by ascending frequency and then time. (Tuple[time, freq])
 
     Notes
     -----
