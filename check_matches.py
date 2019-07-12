@@ -39,11 +39,12 @@ def check_matches(audio_data, database):
 
     for k, v in kvpairs.items():
         if k in database:
+            print(k)
             print(database[k])
             for value in database[k]:
                 print("value: {}".format(value))
                 print(v)
-                match_cnt.update((value[0], value[1] - v[0][1]))
+                match_cnt.update(((value[0], value[1] - v[0][1]),))
 
     #ELIMINATE SONGS WITH INSUFFICIENT MATCHES
     bad_matches = []
@@ -61,7 +62,7 @@ def check_matches(audio_data, database):
         return no_match
 
     #RETURN THE SONG ID WITH THE MOST MATCHES
-    return match_cnt.most_common(1)[0][0]
+    return match_cnt.most_common(1)[0][0][0]
 
 
     #OLD CODE--WILL PROBABLY NOT NEED (IGNORE)
