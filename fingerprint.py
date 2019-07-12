@@ -1,4 +1,4 @@
-def peaks_to_fingerprint(peaks, fanout, song_id=None):
+def get_fingerprint(peaks, fanout, song_id=None):
     """Converts the peaks to keys or a dictionary that represent the song.
 
     This function will output a list of keys unless `song_id` is
