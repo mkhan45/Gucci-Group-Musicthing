@@ -27,7 +27,7 @@ def check_matches(audio_data, database):
     <peaks to keys> (to be named)
     """
 
-    req = 100 #Determine through experimentation
+    req = 20 #Determine through experimentation
     no_match = -1 #maybe -1?
 
     kvpairs = dict(fp.get_fingerprint(spk.sample_to_peaks(spk.sample_to_spectrogram(audio_data)), 15))
@@ -51,6 +51,7 @@ def check_matches(audio_data, database):
         return no_match
             
     #RETURN THE SONG ID WITH THE MOST MATCHES
+    print(match_cnt)
     return match_cnt.most_common(1)
 
 

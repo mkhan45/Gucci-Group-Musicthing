@@ -99,6 +99,7 @@ def append_database(database, fingerprint, song_name):
     ------------
     Song to fingerprint
     """
+    fingerprint = list(fingerprint)
     if fingerprint[0] not in database.dictionary:
         database.dictionary[fingerprint[0]] = []
     database.dictionary[fingerprint[0]].append(fingerprint[1])
