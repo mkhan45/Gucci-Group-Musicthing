@@ -11,7 +11,7 @@ class Database:
         self.dictionary = {}
         self.id_to_name = {}
 
-def get_mp3_data(path):
+def get_mp3_data(path, secs=None):
     """
     Reads mp3 into numpy array
 
@@ -28,8 +28,8 @@ def get_mp3_data(path):
     
     song_path = Path(path)
 
-    data, sr = librosa.load(song_path, sr=44100, mono=True, dtype=float)
-    return data
+    data, sr = librosa.load(song_path, sr=44100, mono=True, dtype=float, duration=secs)
+    return data * 2**15
 
 def get_mic_data(record_time): #also kind of unnecessary??
     """
@@ -45,10 +45,10 @@ def get_mic_data(record_time): #also kind of unnecessary??
     """
     frames, sample_rate = record_audio(record_time)
     audio_data = np.hstack([np.frombuffer(i, np.int16) for i in frames])
-    return audio_data * 2**15
+    return audio_data
 
 
-def read_from_mp3_folder(path):
+def read_from_mp3_folder(path, duration):
     """
     Reads folder of mp3s into database
 
