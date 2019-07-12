@@ -1,4 +1,5 @@
 from numba import njit
+import matplotlib.mlab as mlab
 
 def sample_to_spectrogram(sample):
     """Takes in digital samples and produces the spectrogram array.
@@ -8,15 +9,30 @@ def sample_to_spectrogram(sample):
         spectrogramArray: [numpy array] an array of the spectrogram values
     This function does not plot the spectrogram.
     """
-    pass
+    sampling_rate = 44100  # sampling rate in Hz
 
-def spectrogram_graph(spectrogramArray):
+    S, freqs, times = mlab.specgram(sample, NFFT=4096, Fs=sampling_rate,
+                                    window=mlab.window_hanning,
+                                    noverlap=int(4096 / 2))
+    return S
+
+def spectrogram_graph(sample):
     """
     Graphs the spectrogramArray into a spectrogram
     :param spectrogramArray: [numpy array] The spectrogram array
     :return: None
     """
-    pass
+    fig, ax = plt.subplots()
+
+    S, freqs, times, im = ax.specgram(sample, NFFT=4096, Fs=sampling_rate,
+                                      window=mlab.window_hanning,
+                                      noverlap=4096 // 2)
+    fig.colorbar(im)
+
+    ax.set_xlabel("Time (sec)")
+    ax.set_ylabel("Frequency (Hz)")
+    ax.set_title("Spectrogram")
+    ax.set_ylim(0, 6000);
 
 @njit()
 def _peaks(spec, rows, cols, amp_min):
