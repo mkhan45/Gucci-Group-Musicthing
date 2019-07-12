@@ -18,6 +18,7 @@ def sample_to_spectrogram(sample):
         spectrogramArray: [numpy array] an array of the spectrogram values
     This function does not plot the spectrogram.
     """
+    sampling_rate = 44100  # sampling rate in Hz
 
     S, freqs, times = mlab.specgram(sample, NFFT=4096, Fs=sampling_rate,
                                     window=mlab.window_hanning,
@@ -30,6 +31,8 @@ def spectrogram_graph(sample):
     :param spectrogramArray: [numpy array] The digital samples of audio
     :return: None
     """
+    sampling_rate = 44100  # sampling rate in Hz
+
     fig, ax = plt.subplots()
 
     S, freqs, times, im = ax.specgram(sample, NFFT=4096, Fs=sampling_rate,
