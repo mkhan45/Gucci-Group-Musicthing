@@ -73,8 +73,8 @@ def read_from_mp3_folder(path):
     folder = Path(path)
     for file in folder.iterdir():
         if not file.is_dir() and file.suffix == ".mp3":
+            print(file.stem)
             name = file.stem
-            # Pseudocode
             samples = get_mp3_data(file)
             peaks = sample_to_peaks(samples)
             fingerprint = get_fingerprint(peaks, 15, len(database.id_to_name))
