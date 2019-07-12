@@ -1,6 +1,6 @@
 from digital_samples_to_peaks2 import sample_to_peaks
 from time import sleep
-from input import get_mp3_data, get_mic_data, read_database_file
+from input_audio import get_mp3_data, get_mic_data, read_database_file
 from fingerprint import
 
 database_name = input("What is the path to the databse?")
