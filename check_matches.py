@@ -28,9 +28,9 @@ def check_matches(audio_data, database):
     """
 
     req = 20 #Determine through experimentation
-    no_match = -1 #maybe -1?
+    no_match = -1 
 
-    kvpairs = fp.get_fingerprint(spk.sample_to_peaks(spk.sample_to_spectrogram(audio_data)), 15)
+    kvpairs = fp.get_fingerprint(spk.sample_to_peaks(audio_data), 15)
     #audio_data, times --> spectrogram --> array of peaks: peak = (t, f) --> list of peaks in the song
 
     #COUNT NUMBER OF MATCHED PEAKS FOR EACH SONG IN THE DATABASE, RECORD OFFSETS
@@ -38,29 +38,31 @@ def check_matches(audio_data, database):
     match_cnt = Counter()
 
     #print(database)
-    print(kvpairs)
+    #print(kvpairs)
 
     for k, v in kvpairs.items():
         #print(k)
         if k in database:
-            print(k)
-            print(database[k])
+            #print(k)
+            #print(database[k])
             for value in database[k]:
-                print("value: {}".format(value))
-                print(v)
+                #print("value: {}".format(value))
+                #print(v)
                 match_cnt.update(((value[0], value[1] - v[0][1]),))
 
     #ELIMINATE SONGS WITH INSUFFICIENT MATCHES
     bad_matches = []
 
     for match in match_cnt:
+        #print(match)
         if match_cnt[match] < req:
+            #print(match_cnt[match])
             bad_matches.append(match)
 
     for bad_match in bad_matches:
-        del match_cnt[match]
+        del match_cnt[bad_match]
 
-    print(match_cnt)
+    #print(match_cnt)
 
     if len(match_cnt) == 0:
         return no_match

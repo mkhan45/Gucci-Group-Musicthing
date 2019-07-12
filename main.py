@@ -18,8 +18,11 @@ print("1")
 
 mic_data = get_mic_data(seconds)
 
-print(mic_data)
+#print(mic_data)
 
 matches = check_matches(mic_data, database.dictionary)
 
-print(database.id_to_name[matches])
+if matches != -1:
+    print(database.id_to_name[matches])
+else:
+    print("Song not recognized.")
