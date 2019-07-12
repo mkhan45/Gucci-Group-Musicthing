@@ -1,4 +1,6 @@
-def check_matches(audio_data, filename):
+import numpy as np
+
+def check_matches(audio_data, database):
     """
     Checks if audio data from a song matches a song in the database, and if so, which song it is
 
@@ -7,8 +9,8 @@ def check_matches(audio_data, filename):
     audio_data : np.array([])
         An array of audio samples from recorded audio or audio file.
 
-    database : np.array([]) of dictionaries
-        An array containing all the fingerprints of relevant songs
+    database : dictionary
+        An dictionary containing fingerprint (peak to list of songs) mappings for all songs
     
     Returns
     -------
@@ -18,11 +20,19 @@ def check_matches(audio_data, filename):
     Dependencies
     ------------
     sample_to_spectrogram()
-    spectrogram_graph()
     spectrogram_to_peaks()
-    <peaks to fingerprints> (to be named)
+    <peaks to keys> (to be named)
     """
+    return_string = str()
 
+    peaks = spectrogram_to_peaks(sample_to_spectrogram(audio_data)) #array of peaks: peak = (f, t)
+    keys = peaks_to_keys(peaks) #a list of peaks in the song
+    pos_matches = np.array([])
 
+    for p in keys:
+        if p in database:
+            #add values to pos_matches
+        
+        
 
     pass
