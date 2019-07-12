@@ -1,11 +1,9 @@
-from audio_sampling import analog_to_digital, song_to_digital, turn_off_ticks
-
 import numpy as np
 import librosa
 import numpy as np
-import matplotlib.pyplot as plt
-from IPython.display import Audio
 from pathlib import Path
+from microphone import record_audio
+import pickle
 
 def generate_id(path):
     """
@@ -13,7 +11,7 @@ def generate_id(path):
 
     Parameters
     ----------
-    path : String
+    path : Path (from pathlib)
         path to file
 
     Returns
@@ -21,8 +19,9 @@ def generate_id(path):
     id : String (maybe int???)
         id of file
     """
+    return "placeholder"
 
-def read_from_mp3(path):
+def get_mp3_data(path):
     """
     Reads mp3 into numpy array
 
@@ -33,11 +32,34 @@ def read_from_mp3(path):
 
     Returns
     -------
-    Numpy array
-        audio file
+    (Numpy array, String)
+        A tuple containing the numpy array for the file and the String id
     """
+    
+    song_path = Path(path)
 
-def read_from_mp3_array(path, database_name):
+    data, sr = librosa.load(song_path, sr=44100, mono=True, dtype=float)
+    id = generate_id(song_path)
+    return (data, id)
+
+def get_mic_data(record_time): #also kind of unnecessary??
+    """
+    Parameters
+    ----------
+    record_time : int
+        number of seconds to record
+
+    Returns
+    -------
+    np.ndarray(seconds * sample_rate)
+        The audio data
+    """
+    frames, sample_rate = record_audio(record_time)
+    audio_data = np.hstack([np.frombuffer(i, np.int16) for i in frames])
+    return audio_data
+
+
+def read_from_mp3_folder(path):
     """
     Reads folder of mp3s into database
 
@@ -48,8 +70,8 @@ def read_from_mp3_array(path, database_name):
 
     Returns
     -------
-    List of dictionaries
-        Normal python list of fingerprints
+    Dictionary
+        database of songs
 
     Dependencies
     ------------
@@ -57,15 +79,25 @@ def read_from_mp3_array(path, database_name):
     append_database
     """
 
-def append_database(database_name, fingerprint):
+    folder = Path(path)
+    for file in folder.iterdir():
+        if not file.is_dir():
+            # Pseudocode
+            # samples = get_mp3_data()
+            # peaks = samples to peaks
+            # fingerprint = fingerprint()
+            # append_database(database_name, fingerprint)
+            pass
+
+def append_database(database, fingerprint):
     """
     Appends a fingerprint to a database or creates
     a new one if it does not exist
 
     Parameters
     ----------
-    database_name : String
-        filename of database
+    database : dictionary
+        database
 
     fingerprint : dictionary
         fingerprint of song
@@ -74,3 +106,18 @@ def append_database(database_name, fingerprint):
     ------------
     Song to fingerprint
     """
+
+def read_database_file(filename): #kind of unnecessary?
+    """
+    Reads database file into dictionary
+
+    Parameters
+    ----------
+    filename : String
+        filename
+
+    Returns
+    -------
+    database : dictionary
+    """
+    return pickle.load(open(filename, 'rb'))
