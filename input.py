@@ -3,23 +3,13 @@ import librosa
 import numpy as np
 from pathlib import Path
 from microphone import record_audio
+from digital_samples_to_peaks2 import sample_to_peaks
 import pickle
 
-def generate_id(path):
-    """
-    Generate ID for a song from name/artist
-
-    Parameters
-    ----------
-    path : Path (from pathlib)
-        path to file
-
-    Returns
-    -------
-    id : String (maybe int???)
-        id of file
-    """
-    return "placeholder"
+class database:
+    def __init__(self):
+        self.dictionary = {}
+        self.id_to_name = {}
 
 def get_mp3_data(path):
     """
@@ -32,15 +22,14 @@ def get_mp3_data(path):
 
     Returns
     -------
-    (Numpy array, String)
-        A tuple containing the numpy array for the file and the String id
+    (Numpy array, int)
+        A tuple containing the numpy array for the file and the int id
     """
     
     song_path = Path(path)
 
     data, sr = librosa.load(song_path, sr=44100, mono=True, dtype=float)
-    id = generate_id(song_path)
-    return (data, id)
+    return data
 
 def get_mic_data(record_time): #also kind of unnecessary??
     """
@@ -56,7 +45,7 @@ def get_mic_data(record_time): #also kind of unnecessary??
     """
     frames, sample_rate = record_audio(record_time)
     audio_data = np.hstack([np.frombuffer(i, np.int16) for i in frames])
-    return audio_data
+    return audio_data * 2**15
 
 
 def read_from_mp3_folder(path):
@@ -79,25 +68,28 @@ def read_from_mp3_folder(path):
     append_database
     """
 
+    database = Database()
+
     folder = Path(path)
     for file in folder.iterdir():
         if not file.is_dir():
+            name = file.stem
             # Pseudocode
-            # samples = get_mp3_data()
-            # peaks = samples to peaks
-            # fingerprint = fingerprint()
-            # append_database(database_name, fingerprint)
+            samples = get_mp3_data(file)
+            peaks = sample_to_peaks(samples)
+            fingerprint = get_fingerprint(peaks, 15, len(database.id_to_name))
+            append_database(database, fingerprint, name)
             pass
 
-def append_database(database, fingerprint):
+def append_database(database, fingerprint, song_name):
     """
     Appends a fingerprint to a database or creates
     a new one if it does not exist
 
     Parameters
     ----------
-    database : dictionary
-        database
+    database : Database
+        database class
 
     fingerprint : dictionary
         fingerprint of song
@@ -106,10 +98,12 @@ def append_database(database, fingerprint):
     ------------
     Song to fingerprint
     """
+    database.dictionary.update(fingerprint)
+    database[len(database.id_to_name)] = song_name
 
 def read_database_file(filename): #kind of unnecessary?
     """
-    Reads database file into dictionary
+    Reads database file into database object
 
     Parameters
     ----------
