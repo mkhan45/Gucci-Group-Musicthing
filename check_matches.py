@@ -33,21 +33,29 @@ def check_matches(audio_data, times, database):
     req = 10 #Determine through experimentation
     no_match = "Song not recognized."
 
-    peaks = peaks_to_keys(spk.local_peaks(spk.sample_to_spectrogram(audio_data, times)))
-    #audio_data, times --> spectrogram --> array of peaks: peak = (f, t) --> list of peaks in the song
-    posmatch_k = list() #Keys of possible matches
-    posmatch_v = list() #Values of possible matches
+    kvpairs = peaks_to_pairs(spk.local_peaks(spk.sample_to_spectrogram(audio_data, times)))
+    #audio_data, times --> spectrogram --> array of peaks: peak = (t, f) --> list of peaks in the song
+    times = list() #Times at which peaks were found in given song
+    posmatches = list() #Values (lists of (song1, time), (song2, time)...) for possible matches
 
-    for p in keys:
+    #FIND MATCHING PEAKS
+    for p, t in kvpairs:
         if p in database:
-            posmatch_k.append(p)
-            posmatch_v.append(database[p])
+            times.append(t) #time at which matched peak was found (in given song) is appended to times
+            posmatches.append(database[p]) #actual corresponding time and song values from database are recorded
     
-    if len(pos_matches) < req:
+    #RETURN NO MATCH IF INSUFFICIENT MATCHES
+    if len(posmatches) < req: #need to do this for every song?
         return no_match
 
-    keys = np.array(posmatch_k) #find corresponding times, t, for these keys (from parameter), make array
-    values = np.array(posmatch_v)
-    #Subtract t from values[1], look for even distribution
+    #FIND OFFSETS
+    t_matches = np.array(zip(times, posmatches)) #now includes column 0: given song's time values, column 1: time values from the database
+    time_diffs = []
+    for i in t_matches:
+        diff = i[1] - i[0][:][1] #diff is a np.array object with all the times differences for this one peak
+        #maybe make second term cleaner with numpy array later
+        time_diffs.append(diff)
+    
+    
 
-    pass
+    pass;.
