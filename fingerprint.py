@@ -28,6 +28,7 @@ def get_fingerprint(peaks, fanout, song_id=None):
             if key not in song_dict:
                 song_dict[key] = []
             song_dict[key].append((song_id, peaks[j][0]))
+            #print(peaks[j])
     return song_dict
 
 

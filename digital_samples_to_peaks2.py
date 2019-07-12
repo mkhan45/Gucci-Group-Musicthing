@@ -24,6 +24,7 @@ def sample_to_spectrogram(sample):
     S, freqs, times = mlab.specgram(sample, NFFT=4096, Fs=sampling_rate,
                                     window=mlab.window_hanning,
                                     noverlap=int(4096 / 2))
+
     return S
 
 def spectrogram_graph(sample):
@@ -146,6 +147,6 @@ def sample_to_peaks(samples):
     S[S < 10**(-20)] = 10**(-20)
     log_spectrogram = np.log(S)
     flatS = log_spectrogram.flatten()
-    amp_min = flatS[round(0.85 * len(flatS))]
+    amp_min = flatS[round(0.77 * len(flatS))]
     return local_peaks(log_spectrogram, amp_min,15)
 
